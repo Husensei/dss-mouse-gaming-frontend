@@ -1,4 +1,5 @@
 "use client";
+
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { AiOutlineSetting } from "react-icons/ai";
 import { AiOutlineCalculator } from "react-icons/ai";
@@ -18,16 +19,16 @@ export const Sidebar = () => {
             </div>
           </Link>
           <div className="flex flex-col justify-start items-start mt-10 mb-2">
-            <Link href={"/alternatif"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternatif" ? "bg-[#1D283A] text-[#C8CAD0]" : "text-[#606572]"}`}>
-              <AiOutlineUnorderedList color={path === "/alternatif" ? "#C8CAD0" : "#606572"} />
+            <Link href={"/alternatif"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternatif" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineUnorderedList color={path === "/alternatif" ? "#C8CAD0" : "#75787D"} />
               <p className="font-bold">Daftar Alternatif</p>
             </Link>
-            <Link href={"/preferensi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/preferensi" ? "bg-[#1D283A] text-[#C8CAD0]" : "text-[#606572]"}`}>
-              <AiOutlineSetting color={path === "/preferensi" ? "#C8CAD0" : "#606572"} />
+            <Link href={"/preferensi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/preferensi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineSetting color={path === "/preferensi" ? "#C8CAD0" : "#75787D"} />
               <p className="font-bold">Konfigurasi Preferensi</p>
             </Link>
-            <Link href={"/rekomendasi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/rekomendasi" ? "bg-[#1D283A] text-[#C8CAD0]" : "text-[#606572]"}`}>
-              <AiOutlineCalculator color={path === "/rekomendasi" ? "#C8CAD0" : "#606572"} />
+            <Link href={"/rekomendasi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/rekomendasi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineCalculator color={path === "/rekomendasi" ? "#C8CAD0" : "#75787D"} />
               <p className="font-bold">Hasil Perhitungan</p>
             </Link>
           </div>
