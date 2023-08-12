@@ -5,8 +5,8 @@ import { AiOutlineCheck, AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "r
 import { Button, Card, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title, Text, Flex } from "@tremor/react";
 import { useGlobalContext } from "../context/context";
 import AddModal from "./modal/addModal";
+import EditModal from "./modal/editModal";
 import Axios from "@/postgres";
-import { log } from "console";
 
 export default function Alternatif() {
   const { criteria, setCriteria, alternative, setAlternative } = useGlobalContext();
@@ -84,7 +84,16 @@ export default function Alternatif() {
   const handleEdit = async (formData: any) => {
     if (formData.name === "") return alert("Please input name");
 
-    const form = { ...formData };
+    const form: any = {
+      id: formData.id,
+      name: formData.name,
+    };
+
+    formData.rating.map((item: any) => {
+      form[item.name.toLowerCase()] = item.name == "Price" ? String(item.value) : item.value;
+    });
+
+    console.log(formData);
 
     const res = await Axios.patch(`/alternative`, form).then((res) => res.data);
 
@@ -138,6 +147,7 @@ export default function Alternatif() {
   return (
     <>
       {addAlternativeModal && <AddModal criteriaData={criteria} setModal={setAddAlternativeModal} handleSubmit={handleAdd} />}
+      {editAlternativeModal && <EditModal criteriaData={criteria} setModal={setEditAlternativeModal} alternativeData={alternative[alternative.findIndex((item: any) => item.id === currentAlternative)]} handleSubmit={handleEdit} />}
       <Flex flexDirection="col" className="w-full h-screen bg-[#0F1729] px-10 py-10">
         <Card className="bg-[#1D283A] rounded-[15px]">
           <Flex justifyContent="between" alignItems="center" className="w-full">
