@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AiOutlineCheck, AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
-import { Button, Card, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title, Text, Flex } from "@tremor/react";
 import { useGlobalContext } from "../context/context";
+import { AiOutlineCheck, AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { Button, Card, Flex, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title } from "@tremor/react";
 import AddModal from "./modal/addModal";
 import EditModal from "./modal/editModal";
 import Axios from "@/postgres";
@@ -29,7 +29,6 @@ export default function Alternatif() {
         })
       );
       setCriteria(criteria);
-      console.log(criteria);
     };
     fetchData();
   }, []);
@@ -45,8 +44,6 @@ export default function Alternatif() {
     formData.rating.map((item: any) => {
       form[item.name.toLowerCase()] = item.name == "Price" ? String(item.value) : item.value;
     });
-
-    console.log(form, formData);
 
     const res = await Axios.post(`/alternative`, form).then((res) => res.data);
 
@@ -129,7 +126,7 @@ export default function Alternatif() {
   };
 
   // Include alternative
-  const handleCheckbox = (id: string) => {
+  const handleCheckbox = async (id: string) => {
     const newData = alternative.map((item: any) => {
       if (item.id === id) {
         return {
@@ -142,75 +139,85 @@ export default function Alternatif() {
     });
     setAlternative([...newData]);
     localStorage.setItem("alternative", JSON.stringify(newData));
+
+    const storedData = localStorage.getItem("alternative");
+    if (storedData !== null) {
+      const parsedData = JSON.parse(storedData).filter((item: any) => item.check);
+      console.log(parsedData);
+      const res = await Axios.post(`/recommendation`, parsedData).then((res) => res.data);
+      if (res.status !== 201) return;
+    }
   };
 
   return (
     <>
       {addAlternativeModal && <AddModal criteriaData={criteria} setModal={setAddAlternativeModal} handleSubmit={handleAdd} />}
       {editAlternativeModal && <EditModal criteriaData={criteria} setModal={setEditAlternativeModal} alternativeData={alternative[alternative.findIndex((item: any) => item.id === currentAlternative)]} handleSubmit={handleEdit} />}
-      <Flex flexDirection="col" className="w-full h-screen bg-[#0F1729] px-10 py-10">
-        <Card className="bg-[#1D283A] rounded-[15px]">
+      <Card className="col-span-8 h-screen bg-[#0F1729] px-5 py-5 ">
+        <Card className="w-full h-full bg-[#1D283A] pb-20 rounded-[15px]">
           <Flex justifyContent="between" alignItems="center" className="w-full">
-            <Title>Mouse Gaming List</Title>
-            <Button size="xs" variant="secondary" icon={AiOutlinePlus} onClick={() => setAddAlternativeModal(true)} className="px-3 py-3 rounded-lg">
+            <Title className="font-bold text-[#C8CAD0] text-xl">Mouse Gaming List</Title>
+            <Button size="xs" variant="secondary" icon={AiOutlinePlus} onClick={() => setAddAlternativeModal(true)} className="bg-[#0F1729] px-3 py-3 border border-none rounded-lg">
               Add Alternative
             </Button>
           </Flex>
-          <Table className="mt-5 overflow-x-auto overflow-y-auto z-[50]">
-            <TableHead>
-              <TableRow>
-                <TableHeaderCell>Include</TableHeaderCell>
-                <TableHeaderCell>Product Name</TableHeaderCell>
-                <TableHeaderCell>Shape</TableHeaderCell>
-                <TableHeaderCell>Connectivity</TableHeaderCell>
-                <TableHeaderCell>Grip Type</TableHeaderCell>
-                <TableHeaderCell>Weight</TableHeaderCell>
-                <TableHeaderCell>Sensor</TableHeaderCell>
-                <TableHeaderCell>Price</TableHeaderCell>
-                <TableHeaderCell>Action</TableHeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {alternative &&
-                alternative.map((item: any) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      <Button
-                        size="xs"
-                        color="slate"
-                        onClick={() => handleCheckbox(item.id)}
-                        className={`flex justify-center items-center w-5 h-5 my-auto mx-auto ${item.check ? "bg-[#2BD4BD] border border-[#2BD4BD]" : "border border-[#64748B]"} rounded-[3px]`}
-                      >
-                        {item.check && <AiOutlineCheck color="#182730" />}
-                      </Button>
-                    </TableCell>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.shape}</TableCell>
-                    <TableCell>{item.connectivity}</TableCell>
-                    <TableCell>{item.grip}</TableCell>
-                    <TableCell>{item.weight}g</TableCell>
-                    <TableCell>{item.sensor}</TableCell>
-                    <TableCell>Rp{item.price}</TableCell>
-                    <TableCell className="mx-auto flex justify-center items-start gap-3">
-                      <button
-                        onClick={() => {
-                          setCurrentAlternative(item.id);
-                          setEditAlternativeModal(true);
-                        }}
-                        className="w-10 h-10 flex justify-center items-center bg-[#F4C152] text-[#0F1729] rounded-lg"
-                      >
-                        <AiOutlineEdit />
-                      </button>
-                      <button onClick={() => handleDelete(item.id)} className="w-10 h-10 flex justify-center items-center bg-[#FB6F84] text-[#0F1729] rounded-lg">
-                        <AiOutlineDelete />
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <div className="w-full h-full overflow-y-scroll mt-5 z-[50]">
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeaderCell>Include</TableHeaderCell>
+                  <TableHeaderCell>Mouse Name</TableHeaderCell>
+                  <TableHeaderCell>Shape</TableHeaderCell>
+                  <TableHeaderCell>Connectivity</TableHeaderCell>
+                  <TableHeaderCell>Grip</TableHeaderCell>
+                  <TableHeaderCell>Weight</TableHeaderCell>
+                  <TableHeaderCell>Sensor</TableHeaderCell>
+                  <TableHeaderCell>Price</TableHeaderCell>
+                  <TableHeaderCell>Action</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className="mt-10">
+                {alternative &&
+                  alternative.map((item: any) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <Button
+                          size="xs"
+                          color="slate"
+                          onClick={() => handleCheckbox(item.id)}
+                          className={`flex justify-center items-center w-5 h-5 my-auto mx-auto ${item.check ? "bg-[#2BD4BD] border border-[#2BD4BD]" : "border border-[#64748B]"} rounded-[3px]`}
+                        >
+                          {item.check && <AiOutlineCheck color="#182730" />}
+                        </Button>
+                      </TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.shape}</TableCell>
+                      <TableCell>{item.connectivity}</TableCell>
+                      <TableCell>{item.grip}</TableCell>
+                      <TableCell>{item.weight}g</TableCell>
+                      <TableCell>{item.sensor}</TableCell>
+                      <TableCell>Rp{item.price}</TableCell>
+                      <TableCell className="mx-auto flex justify-center items-start gap-3">
+                        <button
+                          onClick={() => {
+                            setCurrentAlternative(item.id);
+                            setEditAlternativeModal(true);
+                          }}
+                          className="w-5 h-5 flex justify-center items-center bg-[#F4C152] text-[#0F1729] rounded-[3px]"
+                        >
+                          <AiOutlineEdit />
+                        </button>
+                        <button onClick={() => handleDelete(item.id)} className="w-5 h-5 flex justify-center items-center bg-[#FB6F84] text-[#0F1729] rounded-[3px]">
+                          <AiOutlineDelete />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
         </Card>
-      </Flex>
+      </Card>
     </>
   );
 }

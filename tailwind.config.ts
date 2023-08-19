@@ -13,9 +13,9 @@ const config: Config = {
       colors: {
         "dark-tremor": {
           brand: {
-            faint: "#18B4F7", // custom
-            DEFAULT: "#C8CAD0", // blue-500
-            emphasis: "#182730", // blue-400
+            faint: "#transparent",
+            DEFAULT: "#transparent",
+            emphasis: "#transparent",
           },
           border: {
             DEFAULT: "transparent", // gray-800

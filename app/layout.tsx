@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <GlobalContextProvider>
-          <div className="w-screen h-screen flex">
+          <div className="w-screen h-screen grid grid-cols-10">
             {<Sidebar />}
             {children}
           </div>

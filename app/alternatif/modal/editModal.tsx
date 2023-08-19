@@ -1,7 +1,6 @@
 "use client";
 
-import { Card, Flex } from "@tremor/react";
-import { log } from "console";
+import { Button, Flex, Title } from "@tremor/react";
 import { useState } from "react";
 
 interface Props {
@@ -23,30 +22,27 @@ export default function EditModal({ alternativeData, criteriaData, setModal, han
     }
   }
 
-  console.log("Initial Value", initialValue);
-
   const [name, setName] = useState(alternativeData.name);
   const [rating, setRating] = useState<any[]>(initialValue);
 
-  console.log("Rating", rating);
+  console.log(rating);
 
   return (
-    <Flex justifyContent="center" alignItems="center" className="absolute top-0 left-0 w-screen h-screen bg-[#9A4757] bg-opacity-60 z-[100]">
-      <Flex flexDirection="col" justifyContent="between" alignItems="center" className="w-[820px] h-[630px] p-10 bg-white rounded-[18px] ">
+    <Flex justifyContent="center" alignItems="center" className="fixed top-0 left-0 w-screen h-screen bg-[#2E2E2E] bg-opacity-60 z-[100]">
+      <Flex flexDirection="col" justifyContent="center" alignItems="center" className="w-[500px] h-[450px] p-10 bg-[#1D283A] rounded-[15px] ">
         <Flex flexDirection="col" className="w-full">
-          <p className="font-bold text-[28px] text-black">Edit Alternative</p>
-          <div className="w-full mt-8">
-            <p className="font-bold text-black">Mouse Name</p>
-            <input className="mt-2 w-full h-10 border border-[#E1E1E1] px-2" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-          </div>
-          <div className="mt-10">
-            <p className="font-bold text-black">Kriteria</p>
-            <div className="grid grid-cols-3 mt-8 gap-y-4">
+          <Title className="font-bold text-[24px] text-[#C8CAD0]">Edit Mouse</Title>
+          <Flex flexDirection="col" alignItems="start" className="mt-3">
+            <p className="font-bold text-[#C8CAD0]">Mouse Name</p>
+            <input className="mt-2 w-full h-10 px-2" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </Flex>
+          <div className="mt-2">
+            <div className="grid grid-cols-3 mt-2 gap-x-4 gap-y-4">
               {rating.map((item: any) => (
                 <div className="flex flex-col justify-start items-start" key={item.id}>
-                  <p className="font-bold text-black">{item.name}</p>
+                  <p className="font-bold text-[#C8CAD0]">{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</p>
                   <input
-                    className="mt-2 w-32 h-10 border border-[#E1E1E1] px-2"
+                    className="mt-2 w-32 h-10 px-2"
                     type={item.name == "weight" || item.name == "price" ? "number" : "string"}
                     value={rating[rating.findIndex((data) => data.name === item.name)].value}
                     onChange={(e) => {
@@ -61,8 +57,9 @@ export default function EditModal({ alternativeData, criteriaData, setModal, han
             </div>
           </div>
         </Flex>
-        <div className="w-full flex flex-col justify-center items-center gap-2">
-          <button
+        <Flex flexDirection="row" justifyContent="center" alignItems="center" className="w-full mt-5 gap-5">
+          <Button
+            size="xs"
             onClick={() => {
               handleSubmit({
                 id: alternativeData.id,
@@ -71,14 +68,14 @@ export default function EditModal({ alternativeData, criteriaData, setModal, han
               });
               setName("");
             }}
-            className="w-full flex justify-center items-center py-3.5 bg-[#56AAB1] text-white rounded-[4px]"
+            className="w-1/3 px-3 py-3 bg-[#0F1729] text-lg text-[#C8CAD0] border border-none rounded-lg"
           >
             Submit
-          </button>
-          <button onClick={() => setModal(false)} className="w-full flex justify-center items-center py-3.5 bg-white text-[#F96A61] border border-[#F96A61] rounded-[4px]">
+          </Button>
+          <Button size="xs" onClick={() => setModal(false)} className="w-1/3 px-3 py-3 bg-[#FB6F84] text-lg text-[#0F1729] border border-none rounded-lg">
             Cancel
-          </button>
-        </div>
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   );

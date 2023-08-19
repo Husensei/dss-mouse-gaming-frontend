@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 export const Sidebar = () => {
   const path = usePathname();
   return (
-    <div className="h-screen w-1/4 bg-[#05080F] px-[25px] py-[25px]">
+    <div className="h-screen col-span-2 bg-[#05080F] px-[25px] py-[25px]">
       <div className="h-full flex flex-col items-start">
         <div className="flex flex-col justify-center items-start">
           <Link href={"/"}>
@@ -19,13 +19,13 @@ export const Sidebar = () => {
             </div>
           </Link>
           <div className="flex flex-col justify-start items-start mt-10 mb-2">
-            <Link href={"/alternatif"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternatif" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
-              <AiOutlineUnorderedList color={path === "/alternatif" ? "#C8CAD0" : "#75787D"} />
-              <p className="font-bold">Daftar Alternatif</p>
-            </Link>
             <Link href={"/preferensi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/preferensi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
               <AiOutlineSetting color={path === "/preferensi" ? "#C8CAD0" : "#75787D"} />
               <p className="font-bold">Konfigurasi Preferensi</p>
+            </Link>
+            <Link href={"/alternatif"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternatif" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineUnorderedList color={path === "/alternatif" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Daftar Alternatif</p>
             </Link>
             <Link href={"/rekomendasi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/rekomendasi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
               <AiOutlineCalculator color={path === "/rekomendasi" ? "#C8CAD0" : "#75787D"} />
