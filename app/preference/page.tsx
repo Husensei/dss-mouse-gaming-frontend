@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button, Card, Flex } from "@tremor/react";
 import { useGlobalContext } from "../context/context";
-import { Button, Card, Flex, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title } from "@tremor/react";
 import { Matrix } from "./table/matrix";
 import { Preference } from "./table/preference";
 import { ToastContainer, toast } from "react-toastify";
+import Link from "next/link";
 import Axios from "@/postgres";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,22 +14,8 @@ export default function Preferensi() {
   const { criteria, setCriteria } = useGlobalContext();
   const [isConsistent, setIsConsistent] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const criteria = await Axios.get(`/criteria`).then((res) =>
-        res.data.map((item: any) => {
-          return {
-            ...item,
-            check: false,
-          };
-        })
-      );
-      setCriteria(criteria);
-    };
-    fetchData();
-  }, []);
-
   const mappingCriteria: any[] = [];
+  // const [mappingCriteria, setMappingCriteria] = useState<any>([]);
 
   criteria.map((criteria1: any) => {
     criteria.map((criteria2: any) => {
@@ -40,21 +27,12 @@ export default function Preferensi() {
     });
   });
 
-  const [ahp, setAhp] = useState([]);
-  const [lambda, setLambda] = useState(0);
-  const [ci, setCi] = useState(0);
-  const [cr, setCr] = useState(0);
-
   const handleMatrix = async (data: any) => {
     const matrix = await Axios.post(`/matrix`, data).then((res) => res.data);
 
     if (matrix.status !== 201) return;
 
     const ahpResult = await Axios.get(`/criteria/ahp`).then((res) => res.data);
-
-    const lambdaResult = await Axios.get(`/criteria/lambdamax`).then((res) => res.data.lambda_max);
-
-    const ciResult = await Axios.get(`/criteria/ci`).then((res) => res.data);
 
     const crResult = await Axios.get(`/criteria/cr`).then((res) => res.data);
 
@@ -70,14 +48,8 @@ export default function Preferensi() {
         theme: "dark",
       });
     } else {
-      console.log(crResult);
       setIsConsistent(false);
     }
-
-    setAhp(ahpResult);
-    setLambda(lambdaResult);
-    setCi(ciResult);
-    setCr(crResult);
   };
 
   const handlePreference = async (formData: any) => {
@@ -104,10 +76,12 @@ export default function Preferensi() {
           <Matrix criteriaData={criteria} mappingData={mappingCriteria} handleSubmit={handleMatrix} />
           <Preference handleSubmit={handlePreference} />
         </Flex>
-        <Button size="xs" disabled={isConsistent} className="w-[120px] px-3 py-3 bg-[#1D283A] text-lg text-[#C8CAD0] border border-none rounded-lg mt-5">
-          Calculate
-        </Button>
-        <ToastContainer />
+        <Link href={"/recommendation"}>
+          <Button size="xs" disabled={isConsistent} className="w-[120px] px-3 py-3 bg-[#1D283A] text-lg text-[#C8CAD0] border border-none rounded-lg mt-5">
+            Calculate
+          </Button>
+          <ToastContainer />
+        </Link>
       </Flex>
     </Card>
   );

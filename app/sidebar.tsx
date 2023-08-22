@@ -1,10 +1,8 @@
 "use client";
 
-import { AiOutlineUnorderedList } from "react-icons/ai";
-import { AiOutlineSetting } from "react-icons/ai";
-import { AiOutlineCalculator } from "react-icons/ai";
-import Link from "next/link";
+import { AiOutlineUnorderedList, AiOutlineSetting, AiOutlineCalculator } from "react-icons/ai";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export const Sidebar = () => {
   const path = usePathname();
@@ -19,17 +17,17 @@ export const Sidebar = () => {
             </div>
           </Link>
           <div className="flex flex-col justify-start items-start mt-10 mb-2">
-            <Link href={"/preferensi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/preferensi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
-              <AiOutlineSetting color={path === "/preferensi" ? "#C8CAD0" : "#75787D"} />
-              <p className="font-bold">Konfigurasi Preferensi</p>
+            <Link href={"/alternative"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternative" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineUnorderedList color={path === "/alternative" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Choose Alternatives</p>
             </Link>
-            <Link href={"/alternatif"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/alternatif" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
-              <AiOutlineUnorderedList color={path === "/alternatif" ? "#C8CAD0" : "#75787D"} />
-              <p className="font-bold">Daftar Alternatif</p>
+            <Link href={"/preference"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/preference" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineSetting color={path === "/preference" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Preference Configuration</p>
             </Link>
-            <Link href={"/rekomendasi"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/rekomendasi" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
-              <AiOutlineCalculator color={path === "/rekomendasi" ? "#C8CAD0" : "#75787D"} />
-              <p className="font-bold">Hasil Perhitungan</p>
+            <Link href={"/recommendation"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/recommendation" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineCalculator color={path === "/recommendation" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Calculation Result</p>
             </Link>
           </div>
         </div>

@@ -14,7 +14,7 @@ export const Matrix = ({ criteriaData, mappingData, handleSubmit }: Props) => {
 
   useEffect(() => {
     setScale(mappingData);
-  }, [mappingData]);
+  }, []);
 
   const renderRowValue = (row: number, data: any) => {
     return (
@@ -79,7 +79,7 @@ export const Matrix = ({ criteriaData, mappingData, handleSubmit }: Props) => {
         <Flex justifyContent="between" alignItems="center" className="w-full">
           <Title className="font-bold text-[#C8CAD0] text-xl">Pairwise Comparison</Title>
         </Flex>
-        <div className={`w-full mt-5 py-3 flex justify-around items-center`}>
+        <div className={`w-full mt-5 py-3 flex justify-between items-center`}>
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Criteria</p>
           {criteriaData.map((item: any) => (
             <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-center" key={item.id}>
@@ -88,7 +88,7 @@ export const Matrix = ({ criteriaData, mappingData, handleSubmit }: Props) => {
           ))}
         </div>
         {criteriaData.map((data: any, row: number) => (
-          <div className={`w-full py-4 flex justify-around items-center`} key={row}>
+          <div className={`w-full py-4 flex justify-between items-center`} key={row}>
             {renderRowValue(row, data)}
           </div>
         ))}

@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useGlobalContext } from "../context/context";
-import { AiOutlineCheck, AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { Button, Card, Flex, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title } from "@tremor/react";
+import { AiOutlineCheck, AiOutlineEdit, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { useGlobalContext } from "../context/context";
 import AddModal from "./modal/addModal";
 import EditModal from "./modal/editModal";
 import Axios from "@/postgres";
 
-export default function Alternatif() {
+export default function Alternative() {
   const { criteria, setCriteria, alternative, setAlternative } = useGlobalContext();
 
   const [currentAlternative, setCurrentAlternative] = useState(-1);
@@ -90,8 +90,6 @@ export default function Alternatif() {
       form[item.name.toLowerCase()] = item.name == "Price" ? String(item.value) : item.value;
     });
 
-    console.log(formData);
-
     const res = await Axios.patch(`/alternative`, form).then((res) => res.data);
 
     if (res.status !== 202) return;
@@ -139,14 +137,6 @@ export default function Alternatif() {
     });
     setAlternative([...newData]);
     localStorage.setItem("alternative", JSON.stringify(newData));
-
-    const storedData = localStorage.getItem("alternative");
-    if (storedData !== null) {
-      const parsedData = JSON.parse(storedData).filter((item: any) => item.check);
-      console.log(parsedData);
-      const res = await Axios.post(`/recommendation`, parsedData).then((res) => res.data);
-      if (res.status !== 201) return;
-    }
   };
 
   return (

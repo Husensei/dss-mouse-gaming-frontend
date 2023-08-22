@@ -21,7 +21,7 @@ export const Preference = ({ handleSubmit }: Props) => {
     <Card className="w-1/3 h-[600px] bg-[#1D283A] rounded-[15px]">
       <Flex flexDirection="col" justifyContent="between" alignItems="center" className="w-full">
         <Flex justifyContent="between" alignItems="center" className="w-full">
-          <Title className="font-bold text-[#C8CAD0] text-xl">Preferensi Mouse</Title>
+          <Title className="font-bold text-[#C8CAD0] text-xl">Mouse Preference</Title>
         </Flex>
         <Flex flexDirection="col" justifyContent="start" alignItems="start" className="w-full mt-5 py-3">
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Shape</p>
