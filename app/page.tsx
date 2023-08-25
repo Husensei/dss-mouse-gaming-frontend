@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Typewriter } from "react-simple-typewriter";
 import { Button, Card, Flex, Text, Title } from "@tremor/react";
 import Link from "next/link";
