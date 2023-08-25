@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Button, Card, Flex, Title } from "@tremor/react";
 
 interface Props {
+  criteriaData: any;
   handleSubmit(data: any): void;
 }
 
-export const Preference = ({ handleSubmit }: Props) => {
+export const Preference = ({ criteriaData, handleSubmit }: Props) => {
   const [ergo, setErgo] = useState<number>();
   const [ambi, setAmbi] = useState<number>();
   const [wireless, setWireless] = useState<number>();

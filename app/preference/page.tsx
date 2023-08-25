@@ -9,13 +9,15 @@ import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import Axios from "@/postgres";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 export default function Preferensi() {
+  const { push } = useRouter();
+
   const { criteria, setCriteria } = useGlobalContext();
   const [isConsistent, setIsConsistent] = useState(true);
 
   const mappingCriteria: any[] = [];
-  // const [mappingCriteria, setMappingCriteria] = useState<any>([]);
 
   criteria.map((criteria1: any) => {
     criteria.map((criteria2: any) => {
@@ -69,19 +71,39 @@ export default function Preferensi() {
     if (res.status !== 201) return;
   };
 
+  const handleCalculate = async () => {
+    const ahpResult = await Axios.get(`/criteria/ahp`).then((res) => res.data);
+
+    const lambdaResult = await Axios.get(`/criteria/lambdamax`).then((res) => res.data.lambda_max);
+
+    const ciResult = await Axios.get(`/criteria/ci`).then((res) => res.data);
+
+    const crResult = await Axios.get(`/criteria/cr`).then((res) => res.data);
+
+    const storedData = localStorage.getItem("alternative");
+
+    if (storedData == null) return;
+
+    const parsedData = JSON.parse(storedData).filter((item: any) => item.check);
+
+    const result = await Axios.post(`/recommendation`, parsedData).then((res) => res.data);
+
+    if (result.status !== 201) return;
+
+    push("/recommendation");
+  };
+
   return (
     <Card className="col-span-8 h-screen bg-[#0F1729] px-5 py-5 ">
       <Flex flexDirection="col" justifyContent="between" alignItems="center">
         <Flex flexDirection="row" justifyContent="between" alignItems="start" className="gap-5">
           <Matrix criteriaData={criteria} mappingData={mappingCriteria} handleSubmit={handleMatrix} />
-          <Preference handleSubmit={handlePreference} />
+          <Preference criteriaData={criteria} handleSubmit={handlePreference} />
         </Flex>
-        <Link href={"/recommendation"}>
-          <Button size="xs" disabled={isConsistent} className="w-[120px] px-3 py-3 bg-[#1D283A] text-lg text-[#C8CAD0] border border-none rounded-lg mt-5">
-            Calculate
-          </Button>
-          <ToastContainer />
-        </Link>
+        <Button onClick={handleCalculate} size="xs" disabled={isConsistent} className="w-[120px] px-3 py-3 bg-[#1D283A] text-lg text-[#C8CAD0] border border-none rounded-lg mt-5">
+          Calculate
+        </Button>
+        <ToastContainer />
       </Flex>
     </Card>
   );

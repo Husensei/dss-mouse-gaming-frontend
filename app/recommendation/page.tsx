@@ -8,25 +8,12 @@ import Axios from "@/postgres";
 export default function Rekomendasi() {
   const { criteria, setCriteria } = useGlobalContext();
   const [ahp, setAhp] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
+  const [recommendation, setRecommendation] = useState<any[]>([]);
   const [lambda, setLambda] = useState(0);
   const [ci, setCi] = useState(0);
   const [cr, setCr] = useState(0);
 
   const handleCalculation = async () => {
-    const ahpResult = await Axios.get(`/criteria/ahp`).then((res) => res.data);
-
-    const lambdaResult = await Axios.get(`/criteria/lambdamax`).then((res) => res.data.lambda_max);
-
-    const ciResult = await Axios.get(`/criteria/ci`).then((res) => res.data);
-
-    const crResult = await Axios.get(`/criteria/cr`).then((res) => res.data);
-
-    setAhp(ahpResult);
-    setLambda(lambdaResult);
-    setCi(ciResult);
-    setCr(crResult);
-
     const storedData = localStorage.getItem("alternative");
     if (storedData !== null) {
       const parsedData = JSON.parse(storedData).filter((item: any) => item.check);
@@ -39,11 +26,25 @@ export default function Rekomendasi() {
   const handleRecommendation = async () => {
     const recommendation = await Axios.get(`/recommendation`).then((res) => res.data);
 
-    setRecommendation(recommendation);
+    setRecommendation([...recommendation]);
   };
 
   useEffect(() => {
-    handleCalculation();
+    const getDataCalculation = async () => {
+      const ahpResult = await Axios.get(`/criteria/ahp`).then((res) => res.data);
+
+      const lambdaResult = await Axios.get(`/criteria/lambdamax`).then((res) => res.data.lambda_max);
+
+      const ciResult = await Axios.get(`/criteria/ci`).then((res) => res.data);
+
+      const crResult = await Axios.get(`/criteria/cr`).then((res) => res.data);
+
+      setAhp(ahpResult);
+      setLambda(lambdaResult);
+      setCi(ciResult);
+      setCr(crResult);
+    };
+    getDataCalculation();
     handleRecommendation();
   }, []);
 
