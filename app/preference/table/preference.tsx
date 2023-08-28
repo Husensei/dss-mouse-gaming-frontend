@@ -27,23 +27,65 @@ export const Preference = ({ criteriaData, handleSubmit }: Props) => {
         <Flex flexDirection="col" justifyContent="start" alignItems="start" className="w-full mt-5 py-3">
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Shape</p>
           <Flex flexDirection="row" justifyContent="start" alignItems="start" className="w-full py-5 gap-3">
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={ergo} onChange={(e) => setErgo(Number(e.target.value))} placeholder="Ergonomic"></input>
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={ambi} onChange={(e) => setAmbi(Number(e.target.value))} placeholder="Symmetrical"></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={ergo}
+              onChange={(e) => setErgo(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Ergonomic"
+            ></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={ambi}
+              onChange={(e) => setAmbi(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Symmetrical"
+            ></input>
           </Flex>
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Connectivity</p>
           <Flex flexDirection="row" justifyContent="start" alignItems="start" className="w-full py-5 gap-3">
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={wireless} onChange={(e) => setWireless(Number(e.target.value))} placeholder="Wireless"></input>
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={wired} onChange={(e) => setWired(Number(e.target.value))} placeholder="Wired"></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={wireless}
+              onChange={(e) => setWireless(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Wireless"
+            ></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={wired}
+              onChange={(e) => setWired(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Wired"
+            ></input>
           </Flex>
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Grip</p>
           <Flex flexDirection="row" justifyContent="start" alignItems="start" className="w-full py-5 gap-3">
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={palm} onChange={(e) => setPalm(Number(e.target.value))} placeholder="Palm"></input>
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={claw} onChange={(e) => setClaw(Number(e.target.value))} placeholder="Claw"></input>
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={fingertip} onChange={(e) => setFingertip(Number(e.target.value))} placeholder="Fingertip"></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={palm}
+              onChange={(e) => setPalm(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Palm"
+            ></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={claw}
+              onChange={(e) => setClaw(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Claw"
+            ></input>
+            <input
+              className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center"
+              type="number"
+              value={fingertip}
+              onChange={(e) => setFingertip(Number(e.target.value) > 10.0 ? 10.0 : Number(e.target.value) < 1 ? 1 : Number(e.target.value))}
+              placeholder="Fingertip"
+            ></input>
           </Flex>
           <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Price</p>
           <Flex flexDirection="row" justifyContent="start" alignItems="start" className="w-full py-5 gap-3">
-            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} placeholder="Budget"></input>
+            <input className="w-[110px] h-10 border border-[#C8CAD0] rounded-[3px] text-center" type="number" value={price} onChange={(e) => setPrice(Number(e.target.value) < 1 ? 1 : Number(e.target.value))} placeholder="Budget"></input>
           </Flex>
         </Flex>
       </Flex>
