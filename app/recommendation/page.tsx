@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, Flex, Title } from "@tremor/react";
+import { Card, Flex, Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell, Title } from "@tremor/react";
 import { useGlobalContext } from "../context/context";
 import Axios from "@/postgres";
 
@@ -49,56 +49,75 @@ export default function Rekomendasi() {
   }, []);
 
   return (
-    <Card className="col-span-8 h-screen bg-[#0F1729] px-5 py-5 ">
-      <Flex flexDirection="col" justifyContent="between" alignItems="center" className="gap-5">
-        <Card className="w-full h-full bg-[#1D283A] rounded-[15px]">
-          <Flex flexDirection="col" justifyContent="center" alignItems="center">
-            <Flex justifyContent="between" alignItems="center" className="w-full">
-              <Title className="font-bold text-[#C8CAD0] text-xl">Result</Title>
-              <Flex justifyContent="end" alignItems="center" className="w-1/3 gap-3">
-                <p className="font-bold text-[#C8CAD0] text-sm">Lambda Max : {Number(lambda.toFixed(6))}</p>
-                <p className="font-bold text-[#C8CAD0] text-sm">CI : {Number(ci.toFixed(6))}</p>
-                <p className="font-bold text-[#C8CAD0] text-sm">CR : {Number(cr.toFixed(6))}</p>
-              </Flex>
-            </Flex>
-            <Flex flexDirection="row" justifyContent="between" alignItems="center" className="mt-5 py-3">
-              <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Criteria</p>
-              {criteria.map((item: any, index: number) => (
-                <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-center" key={index}>
-                  {item.name}
-                </p>
-              ))}
-            </Flex>
-            <Flex flexDirection="row" justifyContent="between" alignItems="center" className="py-4">
-              <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start"> Weight</p>
-              {ahp.map((item: any) => (
-                <p className={`w-[60px] font-bold text-sm text-[#C8CAD0] text-center`} key={item.id_criteria}>
-                  {Number(item.weight.toFixed(6))}
-                </p>
-              ))}
+    <Card className="col-span-8 h-screen bg-[#0F1729] px-5 py-5 flex flex-col gap-5">
+      <Card className="w-full bg-[#1D283A] rounded-[15px]">
+        <Flex flexDirection="col" justifyContent="center" alignItems="center">
+          <Flex justifyContent="between" alignItems="center" className="w-full">
+            <Title className="font-bold text-[#C8CAD0] text-xl">Result</Title>
+            <Flex justifyContent="end" alignItems="center" className="w-1/3 gap-3">
+              <p className="font-bold text-[#C8CAD0] text-sm">Lambda Max : {Number(lambda.toFixed(6))}</p>
+              <p className="font-bold text-[#C8CAD0] text-sm">CI : {Number(ci.toFixed(6))}</p>
+              <p className="font-bold text-[#C8CAD0] text-sm">CR : {Number(cr.toFixed(6))}</p>
             </Flex>
           </Flex>
-        </Card>
-        <Card className="w-full h-full bg-[#1D283A] rounded-[15px]">
-          <Flex flexDirection="col" justifyContent="center" alignItems="center">
-            <Flex justifyContent="between" alignItems="center" className="w-full">
-              <Title className="font-bold text-[#C8CAD0] text-xl">Recommendation List</Title>
-            </Flex>
-            <Flex flexDirection="row" justifyContent="start" alignItems="center" className="mt-5 py-3">
-              <p className="w-[100px] font-bold text-sm text-[#C8CAD0] text-start">Rank</p>
-              <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">Mouse Name</p>
-              <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">Rating</p>
-            </Flex>
-            {recommendation.map((item: any, index: number) => (
-              <Flex flexDirection="row" justifyContent="start" alignItems="center" className="py-4" key={index}>
-                <p className="w-[100px] font-bold text-sm text-[#C8CAD0] text-start">{index + 1}</p>
-                <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">{item.name}</p>
-                <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">{item.rating}</p>
-              </Flex>
+          <Flex flexDirection="row" justifyContent="between" alignItems="center" className="mt-5 py-3">
+            <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start">Criteria</p>
+            {criteria.map((item: any, index: number) => (
+              <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-center" key={index}>
+                {item.name}
+              </p>
             ))}
           </Flex>
-        </Card>
-      </Flex>
+          <Flex flexDirection="row" justifyContent="between" alignItems="center" className="py-4">
+            <p className="w-[60px] font-bold text-sm text-[#C8CAD0] text-start"> Weight</p>
+            {ahp.map((item: any) => (
+              <p className={`w-[60px] font-bold text-sm text-[#C8CAD0] text-center`} key={item.id_criteria}>
+                {Number(item.weight.toFixed(6))}
+              </p>
+            ))}
+          </Flex>
+        </Flex>
+      </Card>
+      <Card className="w-full h-full bg-[#1D283A] rounded-[15px]">
+        <Flex flexDirection="col" justifyContent="center" alignItems="center">
+          <Flex justifyContent="between" alignItems="center" className="w-full">
+            <Title className="font-bold text-[#C8CAD0] text-xl">Recommendation List</Title>
+          </Flex>
+          <div className=" w-full h-[430px] overflow-y-auto mt-5">
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeaderCell>Rank</TableHeaderCell>
+                  <TableHeaderCell>Mouse Name</TableHeaderCell>
+                  <TableHeaderCell>Rating</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className="mt-10">
+                {recommendation.map((item: any, index: number) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.rating}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            {/* <Flex flexDirection="row" justifyContent="start" alignItems="center" className="mt-5 py-3">
+                <p className="w-[100px] font-bold text-sm text-[#C8CAD0] text-start">Rank</p>
+                <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">Mouse Name</p>
+                <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">Rating</p>
+              </Flex>
+              {recommendation.map((item: any, index: number) => (
+                <Flex flexDirection="row" justifyContent="start" alignItems="center" className="py-4" key={index}>
+                  <p className="w-[100px] font-bold text-sm text-[#C8CAD0] text-start">{index + 1}</p>
+                  <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">{item.name}</p>
+                  <p className="w-1/3 font-bold text-sm text-[#C8CAD0] text-start">{item.rating}</p>
+                </Flex>
+              ))} */}
+          </div>
+        </Flex>
+      </Card>
+      {/* </Flex> */}
     </Card>
   );
 }
