@@ -7,6 +7,12 @@ interface ContextProps {
   setCriteria: Dispatch<SetStateAction<any>>;
   alternative: any;
   setAlternative: Dispatch<SetStateAction<any>>;
+  matrix: any;
+  setMatrix: Dispatch<SetStateAction<any>>;
+  preference: any;
+  setPreference: Dispatch<SetStateAction<any>>;
+  mappingCriteria: any;
+  setMappingCriteria: Dispatch<SetStateAction<any>>;
 }
 
 const globalContext = createContext<ContextProps>({
@@ -14,11 +20,20 @@ const globalContext = createContext<ContextProps>({
   setCriteria: (): any => [],
   alternative: [],
   setAlternative: (): any => [],
+  matrix: [],
+  setMatrix: (): any => [],
+  preference: [],
+  setPreference: (): any => [],
+  mappingCriteria: [],
+  setMappingCriteria: (): any => [],
 });
 
 export const GlobalContextProvider = ({ children }: { children: any }) => {
   const [criteria, setCriteria] = useState([]);
   const [alternative, setAlternative] = useState([]);
+  const [matrix, setMatrix] = useState([]);
+  const [preference, setPreference] = useState([]);
+  const [mappingCriteria, setMappingCriteria] = useState([]);
 
   return (
     <globalContext.Provider
@@ -27,6 +42,12 @@ export const GlobalContextProvider = ({ children }: { children: any }) => {
         setCriteria,
         alternative,
         setAlternative,
+        matrix,
+        setMatrix,
+        preference,
+        setPreference,
+        mappingCriteria,
+        setMappingCriteria,
       }}
     >
       {children}

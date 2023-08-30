@@ -25,8 +25,6 @@ export default function EditModal({ alternativeData, criteriaData, setModal, han
   const [name, setName] = useState(alternativeData.name);
   const [rating, setRating] = useState<any[]>(initialValue);
 
-  console.log(rating);
-
   return (
     <Flex justifyContent="center" alignItems="center" className="fixed top-0 left-0 w-screen h-screen bg-[#2E2E2E] bg-opacity-60 z-[100]">
       <Flex flexDirection="col" justifyContent="center" alignItems="center" className="w-[500px] h-[450px] p-10 bg-[#1D283A] rounded-[15px] ">

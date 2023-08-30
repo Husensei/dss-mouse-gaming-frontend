@@ -29,6 +29,14 @@ export const Sidebar = () => {
               <AiOutlineCalculator color={path === "/recommendation" ? "#C8CAD0" : "#75787D"} />
               <p className="font-bold">Calculation Result</p>
             </Link>
+            <Link href={"/rank"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/rank" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineCalculator color={path === "/rank" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Recommendation Result</p>
+            </Link>
+            {/* <Link href={"/test"} className={`flex justify-start items-center w-full gap-2 mt-3 px-3 py-3 ${path === "/test" ? "bg-[#1D283A] text-[#C8CAD0] rounded-lg" : "text-[#75787D]"}`}>
+              <AiOutlineCalculator color={path === "/test" ? "#C8CAD0" : "#75787D"} />
+              <p className="font-bold">Test</p>
+            </Link> */}
           </div>
         </div>
       </div>

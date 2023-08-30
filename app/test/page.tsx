@@ -12,7 +12,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Test() {
   const { push } = useRouter();
-  const { criteria, setMappingCriteria } = useGlobalContext();
+  const { criteria } = useGlobalContext();
+  const [isConsistent, setIsConsistent] = useState(true);
 
   const mappingCriteria: any[] = [];
 
@@ -72,13 +73,7 @@ export default function Test() {
     const ciResult = await Axios.get(`/criteria/ci`).then((res) => res.data);
     const crResult = await Axios.get(`/criteria/cr`).then((res) => res.data);
 
-    if (Object.values(formPref).some((value) => value === undefined)) {
-      toast.error("Please fill in all preference values.");
-      return;
-    }
-
     const res = await Axios.post(`/preference`, formPref).then((res) => res.data);
-
     if (res.status !== 201) return;
 
     if (crResult > 0.1) {
@@ -101,7 +96,7 @@ export default function Test() {
             <Matrix criteriaData={criteria} mappingData={mappingCriteria} scale={scale} onScaleChange={handleMatrixChange} />
             <Preference stateSetters={stateSetters} />
           </Flex>
-          <Button onClick={handleCalculate} size="sm" className="w-[120px] px-3 py-3 bg-[#1D283A] text-xl text-[#C8CAD0] border border-none rounded-lg mt-5">
+          <Button onClick={handleCalculate} size="xs" className="w-[120px] px-3 py-3 bg-[#1D283A] text-lg text-[#C8CAD0] border border-none rounded-lg mt-5">
             Calculate
           </Button>
         </Flex>

@@ -43,8 +43,8 @@ export const Matrix = ({ criteriaData, mappingData, scale, onScaleChange }: Prop
                 type="number"
                 value={scale[indexValue].value}
                 onChange={(e) => {
-                  const newScale = [...scale];
-                  const fixValue: number = Math.min(Math.max(Number(e.target.value), 0), 9);
+                  const newScale = [...scale]; // Create a copy of the scale array
+                  const fixValue: number = Math.min(Math.max(Number(e.target.value), 0), 9); // Clamp value between 0 and 9
                   newScale[indexValue] = {
                     ...newScale[indexValue],
                     value: fixValue,
